@@ -2,9 +2,14 @@ package core;
 
 import dao.DemoDao;
 import dao.ZDao;
-import dao.impl.DemoDaoMysqlImpl;
 import dao.impl.DemoDaoOracleImpl;
 import dao.impl.ZDaoRightImpl;
+
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author zhaoxu
@@ -14,16 +19,54 @@ import dao.impl.ZDaoRightImpl;
  */
 public class BeanFactory {
 
-    public static DemoDao getDemoDao(){
-        return new DemoDaoMysqlImpl();
-        //return new DemoDaoOracleImpl();
+  private static Properties properties;
+
+  // 静态缓存区，保存已经创建好的对象
+  private static Map<String, Object> beanMap = new HashMap<>();
+
+
+
+  // 使用静态代码块初始化properties，加载factord.properties文件
+  static {
+    properties = new Properties();
+    try {
+      // 必须使用类加载器读取resource文件夹下的配置文件
+      properties.load(BeanFactory.class.getClassLoader().getResourceAsStream("factory.properties"));
+    } catch (IOException e) {
+      // BeanFactory类的静态初始化都失败了，那后续也没有必要继续执行了
+      throw new ExceptionInInitializerError(
+          "BeanFactory initialize error, cause: " + e.getMessage());
     }
+  }
 
 
 
-    public static ZDao getZDao(){
-        return new ZDaoRightImpl();
-        //return new DemoDaoOracleImpl();
+
+
+  /**
+   * 传定义的别名即可
+   * @author zhaoxu
+   * @param
+   * @return
+   * @throws
+   */
+  public static Object getBean(String beanName) {
+    // 双检锁保证beanMap中确实没有beanName对应的对象
+      if (!beanMap.containsKey(beanName)){
+        synchronized (BeanFactory.class){
+          // 过了双检锁，证明确实没有，可以执行反射创建
+          if (!beanMap.containsKey(beanName)){
+            Object bean = null;
+            try {
+              bean = Class.forName(properties.getProperty(beanName)).newInstance();
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+              e.printStackTrace();
+            }
+            beanMap.put(beanName,bean);
+          }
+        }
     }
+    return beanMap.get(beanName);
+  }
 
 }
