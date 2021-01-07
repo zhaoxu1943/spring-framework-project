@@ -1,7 +1,10 @@
 package service.impl;
 
+import core.BeanFactory;
 import dao.DemoDao;
-import dao.impl.DemoDaoImpl;
+import dao.ZDao;
+import dao.impl.DemoDaoMysqlImpl;
+import dao.impl.ZDaoRightImpl;
 import service.DemoService;
 
 import java.util.List;
@@ -15,10 +18,14 @@ import java.util.List;
 public class DemoServiceImpl implements DemoService {
 
     //简简单单的一个多态
-    private DemoDao demoDao = new DemoDaoImpl();
+    private DemoDao demoDao = BeanFactory.getDemoDao();
+
+    //简简单单的一个多态
+    private ZDao zDao =  BeanFactory.getZDao();
 
     @Override
     public List<String> findAll() {
+        zDao.getRoad();
        return demoDao.findAll();
     }
 }
