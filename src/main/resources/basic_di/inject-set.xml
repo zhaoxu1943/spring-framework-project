@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="person" class="bean.Person">
+        <!--property 给bean属性赋值-->
+        <property name="age" value="11"></property>
+        <property name="name" value="wdnmd"></property>
+    </bean>
+
+    <bean id="cat" class="bean.Cat">
+        <!-- ref ，它代表要关联赋值的 Bean 的 id-->
+        <property name="master" ref="person"></property>
+        <property name="name" value="wdnmde mao"></property>
+    </bean>
+</beans>

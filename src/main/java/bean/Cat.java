@@ -2,15 +2,15 @@ package bean;
 
 /**
  * @author zhaoxu
- * @className Person
+ * @className Cat
  * @projectName spring-framework-project
- * @date 2021/1/14 9:51
+ * @date 2021/1/14 12:19
  */
-public class Person {
+public class Cat {
 
     private String name;
 
-    private Integer age;
+    private Person master;
 
     public String getName() {
         return name;
@@ -20,19 +20,19 @@ public class Person {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public Person getMaster() {
+        return master;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setMaster(Person master) {
+        this.master = master;
     }
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Cat{" +
                 "name='" + name + '\'' +
-                ", age=" + age +
+                ", master=" + master +
                 '}';
     }
 }
