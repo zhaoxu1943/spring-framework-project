@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
     <!--根据bean的类型查找 这次我不再声明 id 属性-->
+
+
     <bean class="bean.Person"></bean>
 
     <bean class="dao.impl.DemoDaoMysqlImpl"></bean>

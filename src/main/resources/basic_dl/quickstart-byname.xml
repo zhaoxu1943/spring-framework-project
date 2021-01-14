@@ -7,4 +7,6 @@
     <!--还是key(beanName) 和 value(全限定名) ，只不过这里分别对应的是 id 和 class 罢了。-->
     <bean id="person" class="bean.Person"></bean>
 
+    <bean id="demoDaoMysqlImpl" class="dao.impl.DemoDaoMysqlImpl"/>
+    <bean id="demoDaoOracleImpl" class="dao.impl.DemoDaoOracleImpl"/>
 </beans>
