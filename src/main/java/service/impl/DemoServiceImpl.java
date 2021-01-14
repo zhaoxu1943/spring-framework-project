@@ -1,8 +1,7 @@
 package service.impl;
 
-import core.BeanFactory;
+import core.ZBeanFactory;
 import dao.DemoDao;
-import dao.ZDao;
 import service.DemoService;
 
 import java.util.List;
@@ -18,13 +17,13 @@ public class DemoServiceImpl implements DemoService {
 
 
     //简简单单的一个多态
-    private DemoDao demoDao = (DemoDao) BeanFactory.getBean("demoDao");
+    private DemoDao demoDao = (DemoDao) ZBeanFactory.getBean("demoDao");
 
 
     @Override
     public List<String> findAll() {
         for (int i = 0; i < 10; i++) {
-            System.out.println(BeanFactory.getBean("demoDao"));
+            System.out.println(ZBeanFactory.getBean("demoDao"));
         }
        return demoDao.findAll();
     }

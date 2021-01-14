@@ -1,12 +1,6 @@
 package core;
 
-import dao.DemoDao;
-import dao.ZDao;
-import dao.impl.DemoDaoOracleImpl;
-import dao.impl.ZDaoRightImpl;
-
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -17,7 +11,7 @@ import java.util.Properties;
  * @projectName spring-framework-project
  * @date 2021/1/7 8:18
  */
-public class BeanFactory {
+public class ZBeanFactory {
 
   private static Properties properties;
 
@@ -31,7 +25,7 @@ public class BeanFactory {
     properties = new Properties();
     try {
       // 必须使用类加载器读取resource文件夹下的配置文件
-      properties.load(BeanFactory.class.getClassLoader().getResourceAsStream("factory.properties"));
+      properties.load(ZBeanFactory.class.getClassLoader().getResourceAsStream("factory.properties"));
     } catch (IOException e) {
       // BeanFactory类的静态初始化都失败了，那后续也没有必要继续执行了
       throw new ExceptionInInitializerError(
@@ -53,7 +47,7 @@ public class BeanFactory {
   public static Object getBean(String beanName) {
     // 双检锁保证beanMap中确实没有beanName对应的对象
       if (!beanMap.containsKey(beanName)){
-        synchronized (BeanFactory.class){
+        synchronized (ZBeanFactory.class){
           // 过了双检锁，证明确实没有，可以执行反射创建
           if (!beanMap.containsKey(beanName)){
             Object bean = null;
