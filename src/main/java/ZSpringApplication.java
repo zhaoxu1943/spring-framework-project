@@ -30,15 +30,19 @@ import java.util.Map;
 public class ZSpringApplication {
 
   public static void main(String[] args) {
-
+      System.out.println("---------------------使用BeanFactory");
       //根据BEAN 别名查找
       //读取配置文件，需要一个载体来加载它，这里咱选用 ClassPathXmlApplicationContext 来加载
       BeanFactory factory1 = new ClassPathXmlApplicationContext("basic_dl/quickstart-byname.xml");
+      //getBean的name重载
       Person person1 = (Person) factory1.getBean("person");
+      //getBean的type重载
+      Person person2 = (Person) factory1.getBean(Person.class);
       System.out.println(person1);
       //如果一个接口有多个实现，而咱又想一次性把这些都拿出来，那 getBean() 方法显然就不够用了，需要使用额外的方式。
       //getBean只要能接受单一参数
 //      factory1.getBean("单个参数,返回一个bean");
+      System.out.println("-------------------将 BeanFactory 接口换为 ApplicationContext");
       //将 BeanFactory 接口换为 ApplicationContext
       ApplicationContext ctx = new ClassPathXmlApplicationContext("basic_dl/quickstart-byname.xml");
       //发现了这样一个方法,传入一个类型，返回一个 Map,而 Map 中的 value 不难猜测就是传入的参数类型对应的那些类 / 实现类。
@@ -57,7 +61,7 @@ public class ZSpringApplication {
       //读取配置文件，需要一个载体来加载它，这里咱选用 ClassPathXmlApplicationContext 来加载
       BeanFactory factory2 = new ClassPathXmlApplicationContext("basic_dl/quickstart-bytype.xml");
       //这次接收的 person 不用强转了！
-      Person person2 = factory2.getBean(Person.class);
+      Person person3 = factory2.getBean(Person.class);
       System.out.println(person2);
       //BeanFactory 可以根据接口类型 找到对应的实现类。
       DemoDao demoDao = factory2.getBean(DemoDaoMysqlImpl.class);
@@ -67,7 +71,7 @@ public class ZSpringApplication {
 
       //依赖注入
       BeanFactory beanFactory3 = new ClassPathXmlApplicationContext("basic_di/inject-set.xml");
-      Person person3 = beanFactory3.getBean(Person.class);
+      Person person4 = beanFactory3.getBean(Person.class);
       System.out.println(person3);
 
       Cat cat = beanFactory3.getBean(Cat.class);
